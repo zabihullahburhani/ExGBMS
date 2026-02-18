@@ -24,13 +24,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        try {
-            //ImageIcon i = new ImageIcon(getClass().getResource("./src/icons/icons8_one_euro_cent_120px.png"));
-           // setIconImage(i.getImage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
     }
 
     // د ډیټابېس مسیر (Path)
@@ -74,6 +67,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -85,16 +79,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanel1MouseDragged(evt);
-            }
-        });
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel1MousePressed(evt);
-            }
-        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -107,14 +91,6 @@ public class Login extends javax.swing.JFrame {
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
             }
         });
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 410, 50));
@@ -130,18 +106,20 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPasswordField1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jPasswordField1FocusLost(evt);
-            }
-        });
         jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 276, 410, 40));
 
+        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        jCheckBox1.setText("نمایش رمز");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, -1, -1));
+
         jButton1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_multiply_25px.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_login_25px.png"))); // NOI18N
         jButton1.setText("ورود");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,11 +165,9 @@ public class Login extends javax.swing.JFrame {
         try {
 
             String user = jTextField1.getText();
-            String pass = jPasswordField1.getText();
-            if (user.equals("") || pass.equals("")) {
-                new fill().setVisible(true);
+//            if (user.matches("[a-zA-Z]")) {
+          
 
-            } else {
                 ps = conn.prepareStatement("SELECT * FROM login WHERE Username=? AND Password_hash=?");
 
                 ps.setString(1, jTextField1.getText());
@@ -199,52 +175,29 @@ public class Login extends javax.swing.JFrame {
                 rs = ps.executeQuery();
 
                 if (rs.next()) {
-                    //  byte[]hashpass=rs.getBytes("Password_hash");
                     new Dashboard().setVisible(true);
                     this.dispose();
 
                 } else {
                     JOptionPane.showMessageDialog(this, "رمز عبور یا اسم کاربری غلط است!!");
                 }
-
-            }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "رمز عبور یا اسم کا");
+//
+//            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        jTextField1.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
-
-    }//GEN-LAST:event_jTextField1FocusLost
-
-    private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
-        jPasswordField1.setBorder(new MatteBorder(0, 0, 3, 0, Color.RED));
-
-    }//GEN-LAST:event_jPasswordField1FocusGained
-
-    private void jPasswordField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusLost
-        jTextField1.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
-
-    }//GEN-LAST:event_jPasswordField1FocusLost
-    int posX, posY;
-    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        posX = evt.getX();
-        posY = evt.getY();
-    }//GEN-LAST:event_jPanel1MousePressed
-
-    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-        this.setLocation(evt.getXOnScreen() - posX, evt.getYOnScreen() - posY);
-    }//GEN-LAST:event_jPanel1MouseDragged
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        char c = evt.getKeyChar();
-        if (!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')) {
-            evt.consume();
-
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            jPasswordField1.setEchoChar('\0');
+        } else {
+            jPasswordField1.setEchoChar('*');
         }
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,7 +228,6 @@ public class Login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 new Login().setVisible(true);
             }
@@ -284,6 +236,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
