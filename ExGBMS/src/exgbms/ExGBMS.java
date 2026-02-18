@@ -16,7 +16,7 @@ public class ExGBMS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("hell");
+        System.out.println("hello");
         int a=939;
         int b=858;
         System.out.println(a+b);
